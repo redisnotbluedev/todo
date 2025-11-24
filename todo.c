@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 
@@ -23,6 +24,7 @@ int main(int argc, char *argv[])
 
 	struct task tasks[128];
 	int tasks_length = 0;
+	bool needs_save = false;
 
 	if (f != NULL) {
 		char name[1024];
@@ -52,6 +54,7 @@ int main(int argc, char *argv[])
 
 		fprintf(f, "'%s'; 0;\n", name);
 		printf("Successfully added task %d: %s.\n", tasks_length + 1, name);
+		fclose(f);
 	}
 	else if (!strcmp(mode, "list")) {
 		if (tasks_length < 1) {
@@ -65,13 +68,35 @@ int main(int argc, char *argv[])
 		}
 	}
 	else if (!strcmp(mode, "done")) {
-		printf("Marking as done\n");
+		if (argc != 3) {
+			fprintf(stderr, "Usage: %s done <task number>", argv[0]);
+			return 1;
+		}
+
+		int i = atoi(argv[2]) - 1;
+		tasks[i].done = 1;
+		needs_save = true;
+		printf("Marked task '%s' as done!\n", tasks[i].name);
 	}
 	else if (!strcmp(mode, "delete")) {
-		printf("Removing");
+		printf("Removing\n");
 	}
 	else {
 		fprintf(stderr, "Usage: %s <add|list|done|delete>\n", argv[0]);
 		return 1;
+	}
+
+	if (needs_save) {
+		f = fopen("todo.dat", "w");
+		if (f == NULL) {
+			fprintf(stderr, "Error: could not save data.");
+			return 1;
+		}
+		else {
+			for (int i = 0; i < tasks_length; i++) {
+				fprintf(f, "'%s'; %d;\n", tasks[i].name, tasks[i].done);
+			}
+		}
+		fclose(f);
 	}
 }
