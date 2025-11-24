@@ -10,7 +10,7 @@ struct task {
 int main(int argc, char *argv[])
 {
 	if (argc <= 1) {
-		printf("Usage: %s <add|list|done|delete>\n", argv[0]);
+		fprintf(stderr, "Usage: %s <add|list|done|delete>\n", argv[0]);
 		return 1;
 	}
 	
@@ -56,6 +56,6 @@ int main(int argc, char *argv[])
 		printf("Removing");
 	}
 	else {
-		printf("Usage: ./todo <add|list|done|delete>\n");
+		fprintf(stderr, "Usage: ./todo <add|list|done|delete>\n");
 	}
 }
