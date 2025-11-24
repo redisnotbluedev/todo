@@ -3,3 +3,6 @@
 'hello world'; 0;
 'buy a cow'; 0;
 'testing testing 1234'; 1;
+'to be deleted'; 0;
+'to be deleted 2'; 1;
+'ok THIS time itll work'; 1;
