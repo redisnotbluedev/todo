@@ -44,7 +44,9 @@ int main(int argc, char *argv[])
 
 		char name[1024] = "";
 		for (int i = 2; i < argc; i++) {
-			strcat(name, " ");
+			if (i > 2) {
+				strcat(name, " ");
+			}
 			strcat(name, argv[i]);
 		}
 
