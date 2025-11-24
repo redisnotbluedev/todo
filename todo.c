@@ -36,7 +36,20 @@ int main(int argc, char *argv[])
 	}
 
 	if (!strcmp(mode, "add")) {
-		printf("Adding\n");
+		f = fopen("todo.dat", "a");
+		if (argc <= 2) {
+			fprintf(stderr, "Usage: %s add <name>", argv[0]);
+			return 1;
+		}
+
+		char name[1024] = "";
+		for (int i = 2; i < argc; i++) {
+			strcat(name, " ");
+			strcat(name, argv[i]);
+		}
+
+		fprintf(f, "'%s'; 0;\n", name);
+		printf("Successfully added task '%s' to tasklist.\n", name);
 	}
 	else if (!strcmp(mode, "list")) {
 		if (tasks_length < 1) {
@@ -56,6 +69,7 @@ int main(int argc, char *argv[])
 		printf("Removing");
 	}
 	else {
-		fprintf(stderr, "Usage: ./todo <add|list|done|delete>\n");
+		fprintf(stderr, "Usage: %s <add|list|done|delete>\n", argv[0]);
+		return 1;
 	}
 }
