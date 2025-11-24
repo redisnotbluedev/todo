@@ -63,7 +63,12 @@ int main(int argc, char *argv[])
 		else {
 			for (int i = 0; i < tasks_length; i++) {
 				struct task task = tasks[i];
-				printf("%d: %s %s\033[0m\n", i + 1, task.done ? "\033[9m✓" : "✕", task.name);
+				printf("%d: %s \033[0m %s%s\033[0m\n",
+					i + 1,
+					task.done ? "\033[32m✓" : "\033[31m✕", // green/red
+					task.done ? "\033[9m" : "", // strikethrough
+					task.name
+				);
 			}
 		}
 	}
