@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 		}
 
 		fprintf(f, "'%s'; 0;\n", name);
-		printf("Successfully added task '%s' to tasklist.\n", name);
+		printf("Successfully added task %d: %s.\n", tasks_length + 1, name);
 	}
 	else if (!strcmp(mode, "list")) {
 		if (tasks_length < 1) {
