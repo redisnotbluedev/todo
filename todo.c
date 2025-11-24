@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
 		if (tasks_length < 1) {
 			printf("No tasks yet!\n");
 		}
+
 		else {
 			for (int i = 0; i < tasks_length; i++) {
 				struct task task = tasks[i];
@@ -78,7 +79,20 @@ int main(int argc, char *argv[])
 		printf("Marked task '%s' as done!\n", tasks[i].name);
 	}
 	else if (!strcmp(mode, "delete")) {
-		printf("Removing\n");
+		if (argc != 3) {
+			fprintf(stderr, "Usage: %s delete <task number>\n", argv[0]);
+			return 1;
+		}
+
+		int i = atoi(argv[2]) - 1;
+		printf("Deleted task '%s' from tasklist!\n", tasks[i].name);
+		
+		for (int j = i; j < tasks_length; j++) {
+			tasks[j] = tasks[j + 1];
+		}
+
+		tasks_length--;
+		needs_save = true;
 	}
 	else {
 		fprintf(stderr, "Usage: %s <add|list|done|delete>\n", argv[0]);
