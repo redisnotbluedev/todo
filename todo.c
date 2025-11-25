@@ -61,6 +61,7 @@ int main(int argc, char *argv[])
 		}
 
 		else {
+			printf("You have %d task%s:\n", tasks_length, tasks_length == 1 ? "" : "s");
 			for (int i = 0; i < tasks_length; i++) {
 				struct task task = tasks[i];
 				printf("%d: %s \033[0m %s%s\033[0m\n",
